@@ -20,11 +20,11 @@ export default function Home({settings}){
   const cur=settings.currency||'PKR';
   const diff=lastMonthKwh>0?Math.round(((monthKwh-lastMonthKwh)/lastMonthKwh)*100):0;
 
-  if(loading)return(<Layout><div className="flex items-center justify-center h-64"><div className="text-center"><div className="w-7 h-7 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-3"/><div className="text-dim text-sm">Connecting to sensor...</div>{connectionStatus==='error'&&<div className="text-xs text-danger mt-2">{errorMessage}</div>}</div></div></Layout>);
+  if(loading)return(<Layout><div className="flex items-center justify-center h-64"><div className="text-center"><div className="w-7 h-7 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-3"/><div className="text-dim text-sm">Connecting to sensor...</div></div></div></Layout>);
 
   return(
     <Layout isOnline={isOnline} alertCount={visible.length}>
-      {connectionStatus==='error'&&<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4 flex items-start gap-3"><div className="text-red-500 text-lg mt-0.5">⚠</div><div className="flex-1"><div className="text-sm font-medium text-red-600">Connection Error</div><div className="text-xs text-red-500/70 mt-0.5">{errorMessage}</div><button onClick={refetch} className="text-xs text-red-600 mt-2 hover:text-red-700 font-medium">Retry Connection</button></div></div>}
+      {connectionStatus==='error'&&errorMessage&&<div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4 flex items-start gap-3"><div className="text-red-500 text-lg mt-0.5">⚠</div><div className="flex-1"><div className="text-sm font-medium text-red-600">Connection Error</div><div className="text-xs text-red-500/70 mt-0.5">{errorMessage}</div><button onClick={refetch} className="text-xs text-red-600 mt-2 hover:text-red-700 font-medium">Retry Connection</button></div></div>}
       <div className="flex items-center justify-between mb-5">
         <div><h1 className="font-display text-2xl font-bold text-text">Overview</h1><p className="text-dim text-xs mt-0.5">{lastFetch?`Updated ${format(new Date(lastFetch),'HH:mm:ss')}`:'Connecting...'}</p></div>
         <button onClick={refetch} className="btn btn-sm"><RefreshCw size={12}/>Refresh</button>
